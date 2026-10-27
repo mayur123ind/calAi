@@ -1,0 +1,481 @@
+@import "tailwindcss";
+
+/*
+ * Design system — see design-system/calai/MASTER.md.
+ * Palette: emerald leaf, tomato, turmeric and aubergine on a mint-cream paper,
+ * with one ink-green "night" hero surface and a lime glow as the signature accent.
+ */
+:root {
+  --paper: #eef3ec;
+  --surface: #ffffff;
+  --surface-2: #e5ede3;
+  --ink: #0b1a12;
+  --muted: #4f5f56;
+  --line: #d3ddd0;
+  --leaf: #047857;
+  --leaf-strong: #065f46;
+  --leaf-soft: #d5f5e3;
+  --on-leaf: #ffffff;
+  --lime: #a3e635;
+  --protein: #d03e22;
+  --carbs: #b86f00;
+  --fat: #7c3aed;
+  --water: #0284c7;
+  --danger: #b3261e;
+  --danger-soft: #fde8e5;
+  --steel-hi: #fbfcfb;
+  --steel-lo: #c5d0c8;
+  --aurora-1: rgb(52 211 153 / 0.35);
+  --aurora-2: rgb(163 230 53 / 0.28);
+  --aurora-3: rgb(251 146 60 / 0.18);
+  --grain-opacity: 0.05;
+  --shadow-sm: 0 1px 1px rgb(11 26 18 / 0.04), 0 2px 6px rgb(11 26 18 / 0.05);
+  --shadow-md: 0 1px 2px rgb(11 26 18 / 0.04), 0 8px 20px -6px rgb(11 26 18 / 0.08), 0 24px 48px -12px rgb(11 26 18 / 0.1);
+  --shadow-glow: 0 10px 30px -8px rgb(4 120 87 / 0.55);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  color-scheme: light;
+}
+
+/* Dark palette: follows the device unless the person picked Light or Dark (data-theme on <html>). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #050d09;
+    --surface: #0d1813;
+    --surface-2: #14231c;
+    --ink: #ecf4ee;
+    --muted: #93a69b;
+    --line: #20322a;
+    --leaf: #34d399;
+    --leaf-strong: #6ee7b7;
+    --leaf-soft: #0d2c20;
+    --on-leaf: #03140c;
+    --lime: #d9f99d;
+    --protein: #ff7a59;
+    --carbs: #fbbf24;
+    --fat: #b69cff;
+    --water: #38bdf8;
+    --danger: #f2867c;
+    --danger-soft: #3a1714;
+    --steel-hi: #2a3a31;
+    --steel-lo: #0a120e;
+    --aurora-1: rgb(16 185 129 / 0.22);
+    --aurora-2: rgb(132 204 22 / 0.12);
+    --aurora-3: rgb(234 88 12 / 0.1);
+    --grain-opacity: 0.07;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -8px rgb(0 0 0 / 0.6);
+    --shadow-glow: 0 10px 34px -6px rgb(52 211 153 / 0.45);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #050d09;
+  --surface: #0d1813;
+  --surface-2: #14231c;
+  --ink: #ecf4ee;
+  --muted: #93a69b;
+  --line: #20322a;
+  --leaf: #34d399;
+  --leaf-strong: #6ee7b7;
+  --leaf-soft: #0d2c20;
+  --on-leaf: #03140c;
+  --lime: #d9f99d;
+  --protein: #ff7a59;
+  --carbs: #fbbf24;
+  --fat: #b69cff;
+  --water: #38bdf8;
+  --danger: #f2867c;
+  --danger-soft: #3a1714;
+  --steel-hi: #2a3a31;
+  --steel-lo: #0a120e;
+  --aurora-1: rgb(16 185 129 / 0.22);
+  --aurora-2: rgb(132 204 22 / 0.12);
+  --aurora-3: rgb(234 88 12 / 0.1);
+  --grain-opacity: 0.07;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -8px rgb(0 0 0 / 0.6);
+  --shadow-glow: 0 10px 34px -6px rgb(52 211 153 / 0.45);
+  color-scheme: dark;
+}
+
+/* Tailwind's dark: variant follows the same rule. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+@utility night {
+  --surface: #0f2219;
+  --surface-2: #183126;
+  --ink: #f1f8f3;
+  --muted: #a3b8ab;
+  --line: #24402f;
+  --leaf: #4ade80;
+  --leaf-strong: #86efac;
+  --leaf-soft: #133526;
+  --on-leaf: #03140c;
+  --protein: #ff8a6a;
+  --carbs: #fcc845;
+  --fat: #c4b0ff;
+  --steel-hi: #2d4a3a;
+  --steel-lo: #0b1711;
+  color: var(--ink);
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgb(163 230 53 / 0.22), transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgb(16 185 129 / 0.3), transparent 60%),
+    linear-gradient(160deg, #0f2a1e 0%, #08150f 100%);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-leaf: var(--leaf);
+  --color-leaf-strong: var(--leaf-strong);
+  --color-leaf-soft: var(--leaf-soft);
+  --color-on-leaf: var(--on-leaf);
+  --color-lime: var(--lime);
+  --color-protein: var(--protein);
+  --color-carbs: var(--carbs);
+  --color-fat: var(--fat);
+  --color-water: var(--water);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: var(--font-onest);
+  --font-display: var(--font-bricolage);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-glow: var(--shadow-glow);
+  --ease-out-expo: var(--ease-out);
+  --ease-spring: var(--ease-spring);
+  --animate-rise: rise 700ms var(--ease-out) backwards;
+  --animate-pop: pop 500ms var(--ease-spring) both;
+}
+
+/* Every card in the app: soft glassy surface with a hairline edge. */
+@utility card {
+  border-radius: 28px;
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--line) 70%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+
+/* Small uppercase label above big headings. */
+@utility eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-onest), system-ui, sans-serif;
+  isolation: isolate;
+}
+
+/* Ambient backdrop: slow-drifting aurora plus film grain, behind everything. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+body::before {
+  inset: -20%;
+  background:
+    radial-gradient(40% 35% at 15% 10%, var(--aurora-1), transparent 70%),
+    radial-gradient(35% 30% at 90% 20%, var(--aurora-2), transparent 70%),
+    radial-gradient(45% 40% at 70% 95%, var(--aurora-3), transparent 70%);
+  filter: blur(20px);
+  animation: aurora 28s ease-in-out infinite alternate;
+}
+body::after {
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.font-display {
+  font-optical-sizing: auto;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+::selection {
+  background: var(--lime);
+  color: #0b1a12;
+}
+
+/* Number inputs: no spinners, they crowd small fields on phones. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ---------- Motion ---------- */
+
+.ring-progress {
+  transition: stroke-dashoffset 1400ms var(--ease-out);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes aurora {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) rotate(8deg) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-3%, 4%, 0) rotate(-6deg) scale(1.04);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes logo-draw {
+  from {
+    stroke-dasharray: 0 120;
+  }
+}
+
+@keyframes arc-draw {
+  from {
+    stroke-dasharray: 0 var(--c);
+  }
+}
+
+@keyframes scan {
+  from {
+    top: -3rem;
+  }
+  to {
+    top: calc(100% - 3rem);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Masked type: each line slides up out of its own clip. */
+@keyframes mask-up {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.mask-line {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.mask-line > span {
+  display: inline-block;
+  animation: mask-up 900ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+/* Stagger the direct children of a container in by a beat each, not all at once. */
+.stagger > *:not([class*="animate-"]) {
+  animation: rise 700ms var(--ease-out) backwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 40ms; }
+.stagger > *:nth-child(2) { animation-delay: 110ms; }
+.stagger > *:nth-child(3) { animation-delay: 180ms; }
+.stagger > *:nth-child(4) { animation-delay: 250ms; }
+.stagger > *:nth-child(5) { animation-delay: 320ms; }
+.stagger > *:nth-child(6) { animation-delay: 390ms; }
+.stagger > *:nth-child(n + 7) { animation-delay: 450ms; }
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Water card: two offset waves keep drifting while the level holds still. */
+@keyframes wave {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.wave {
+  animation: wave 6s linear infinite;
+}
+.wave-slow {
+  animation: wave 11s linear infinite reverse;
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+.float {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Sheen sweep across primary buttons on hover. */
+.sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 700ms var(--ease-out);
+}
+.sheen:hover::after {
+  transform: translateX(120%);
+}
+
+/* ---------- Route view transitions (React <ViewTransition>) ---------- */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(.page) {
+  animation: 160ms ease-in both vt-out;
+}
+::view-transition-new(.page) {
+  animation: 520ms var(--ease-out) 90ms both vt-in;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(4px);
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+}
+
+/* The active nav pill is one object that slides between tabs. */
+::view-transition-group(.nav-pill) {
+  animation-duration: 480ms;
+  animation-timing-function: var(--ease-spring);
+}
+
+/* Reports print in light colours on white, whatever the screen theme. */
+@media print {
+  :root,
+  .night {
+    --paper: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f1f3f0;
+    --ink: #111111;
+    --muted: #555f58;
+    --line: #d9e1d6;
+    --leaf: #1f5f45;
+    --protein: #c94a35;
+    color-scheme: light;
+    background: #ffffff;
+  }
+  body::before,
+  body::after {
+    display: none;
+  }
+  .card {
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
