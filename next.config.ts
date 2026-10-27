@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // lib/db.ts reads the Supabase CA at runtime; make sure serverless bundles (e.g. Vercel) include it.
+  outputFileTracingIncludes: {
+    "/**": ["./certs/**"],
+  },
   async headers() {
     return [
       {
